@@ -13,27 +13,33 @@ $ docker build -t fakerest_service .
 
 ## Usage
 
-1. Create a folder for your fake service with a Dockerfile like the following :
+##### Create a folder for your fake service with a Dockerfile like the following :
 
 ```docker
 FROM fake_service:latest
 
-COPY views ./views
-COPY routes.yml ./
+COPY views data/views
+COPY routes.yml data
 
 CMD ["./run.sh"]
 ```
 
-2. Build your docker image
+##### Build your docker image
 
 ```
 $ docker build -t my_service .
 ```
 
-3. Start your service
+##### Start your service
 
 ```
 $ docker run -p 9000:9000 my_service
+```
+
+Alternatively, if you want to be able to change the views without having to re-build your Docker image, you can run the docker mounting the respective data folder and make changes to the views that would reflect in your response without having to re-build the image or restart the container.
+
+```
+$ docker run -p 9000:9000 -v `pwd`:/usr/src/app/data my_service
 ```
 
 ## Contributing
